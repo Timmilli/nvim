@@ -224,7 +224,7 @@ require("lazy").setup({
 
 	require("plugins.treesiter"),
 
-	require("plugins.markdown_preview"),
+	require("plugins.markdown-preview"),
 
 	require("plugins.luasnip"),
 
