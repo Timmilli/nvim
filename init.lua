@@ -204,13 +204,13 @@ require("lazy").setup({
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
 
+	require("plugins.lsp"),
+
 	require("plugins.catppuccin"),
 
 	require("plugins.telescope"),
 
 	require("plugins.lazy"),
-
-	require("plugins.lsp"),
 
 	require("plugins.blink"),
 
