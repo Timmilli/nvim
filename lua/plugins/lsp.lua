@@ -19,13 +19,15 @@ return {
 		-- LSP ATTACH KEYMAPS & UI
 		---------------------------------------------------------------------------
 		vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
+				-- Helper to create keymaps
 				local map = function(keys, func, desc, mode)
 					mode = mode or "n"
 					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
 
+				-- Actual lsp-related keymaps
 				map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
 				map("gra", vim.lsp.buf.code_action, "[G]oto Code [A]ction", { "n", "x" })
 				map("grr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -36,36 +38,14 @@ return {
 				map("gW", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Open Workspace Symbols")
 				map("grt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype Definition")
 
-				local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-				-- The following two autocommands are used to highlight references of the
-				-- word under your cursor when your cursor rests there for a little while.
-				--    See `:help CursorHold` for information about when this is executed
-				--
-				-- When you move your cursor, the highlights will be cleared (the second autocommand).
-				local client = vim.lsp.get_client_by_id(event.data.client_id)
-				if client and client:supports_method("textDocument/documentHighlight", event.buf) then
-					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						buffer = event.buf,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.document_highlight,
-					})
-
-					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						buffer = event.buf,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.clear_references,
-					})
-
-					vim.api.nvim_create_autocmd("LspDetach", {
-						group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-						callback = function(event2)
-							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-						end,
-					})
-				end
+				-- Detach function called upon exit
+				vim.api.nvim_create_autocmd("LspDetach", {
+					group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
+					callback = function(event2)
+						vim.lsp.buf.clear_references()
+						vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+					end,
+				})
 
 				-- The following code creates a keymap to toggle inlay hints in your
 				-- code, if the language server you are using supports them
@@ -96,66 +76,24 @@ return {
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		---------------------------------------------------------------------------
-		-- MASON
+		-- MASON & LSP SERVERS (NEOVIM 0.11.6)
 		---------------------------------------------------------------------------
 
-		---------------------------------------------------------------------------
-		-- LSP SERVERS (NEOVIM 0.12 NATIVE)
-		---------------------------------------------------------------------------
-
-		require("mason").setup()
+		local servers = {
+			-- Lua LSP
+			"lua-language-server",
+			"stylua",
+			-- C LSP
+			"clangd",
+			-- Python LSP
+			"basedpyright",
+			"ruff",
+		}
 
 		require("mason-tool-installer").setup({
-			ensure_installed = {
-				"basedpyright",
-				"clangd",
-				"ltex-ls",
-				"lua-language-server",
-				"ruff",
-				"ruff-lsp",
-				"stylua",
-			},
+			ensure_installed = servers,
 		})
 
-		vim.lsp.enable({
-			"basedpyright",
-			"clangd",
-			"ltex-ls",
-			"lua-language-server",
-			"ruff",
-			"ruff-lsp",
-			"stylua",
-		})
-
-		vim.lsp.config("lua_ls", {
-			on_init = function(client)
-				if client.workspace_folders then
-					local path = client.workspace_folders[1].name
-					if
-						path ~= vim.fn.stdpath("config")
-						and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-					then
-						return
-					end
-				end
-
-				client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-					runtime = {
-						version = "LuaJIT",
-						path = { "lua/?.lua", "lua/?/init.lua" },
-					},
-					workspace = {
-						checkThirdParty = false,
-						-- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-						--  See https://github.com/neovim/nvim-lspconfig/issues/3189
-						library = vim.api.nvim_get_runtime_file("", true),
-					},
-				})
-			end,
-			settings = {
-				Lua = {},
-			},
-		})
-		vim.lsp.enable("lua_ls")
+		vim.lsp.enable(servers)
 	end,
 }
