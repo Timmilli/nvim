@@ -1,31 +1,26 @@
-return {
-	vim.lsp.config("lua_ls", {
-		on_init = function(client)
-			if client.workspace_folders then
-				local path = client.workspace_folders[1].name
-				if
-					path ~= vim.fn.stdpath("config")
-					and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-				then
-					return
-				end
-			end
+local root_markers1 = {
+	".emmyrc.json",
+	".luarc.json",
+	".luarc.jsonc",
+}
+local root_markers2 = {
+	".luacheckrc",
+	".stylua.toml",
+	"stylua.toml",
+	"selene.toml",
+	"selene.yml",
+}
 
-			client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-				runtime = {
-					version = "LuaJIT",
-					path = { "lua/?.lua", "lua/?/init.lua" },
-				},
-				workspace = {
-					checkThirdParty = false,
-					-- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-					--  See https://github.com/neovim/nvim-lspconfig/issues/3189
-					library = vim.api.nvim_get_runtime_file("", true),
-				},
-			})
-		end,
-		settings = {
-			Lua = {},
+---@type vim.lsp.Config
+return {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = vim.fn.has("nvim-0.11.3") == 1 and { root_markers1, root_markers2, { ".git" } }
+		or vim.list_extend(vim.list_extend(root_markers1, root_markers2), { ".git" }),
+	settings = {
+		Lua = {
+			codeLens = { enable = true },
+			hint = { enable = true, semicolon = "Disable" },
 		},
-	}),
+	},
 }
