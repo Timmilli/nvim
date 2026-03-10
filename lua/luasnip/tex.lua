@@ -107,7 +107,7 @@ return {
 
 	-- Title page snippet
 	s(
-		{ trig = "titlepage", snippetType = "snippet", dscr = "A good title page template" },
+		{ trig = "titlepage", snippetType = "snippet", desc = "A good title page template" },
 		fmta(
 			[[
 				\begin{titlepage}
