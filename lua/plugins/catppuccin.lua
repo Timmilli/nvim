@@ -20,6 +20,11 @@ return { -- You can easily change to a different colorscheme.
 
 		-- Load the colorscheme here.
 		vim.cmd.colorscheme("catppuccin-macchiato")
-		require("lualine").setup()
+		require("lualine").setup({
+			options = { theme = "catppuccin" },
+			sections = {
+				lualine_c = { { "filename", path = 2 } },
+			},
+		})
 	end,
 }
