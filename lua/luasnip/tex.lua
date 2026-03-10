@@ -145,14 +145,30 @@ return {
 
 				\newpage
 
+				% ################
+				% Pages without number
+				% aka abstract and table of contents
+				% ################
+
 				\pagenumbering{arabic}
 				\setcounter{page}{1}
 
+				% ################
+				% Pages with arabic numbers
+				% aka main content
+				% ################
+
 				\pagenumbering{roman}
 				\setcounter{page}{1}
-
 				\appendix
 
+				% ################
+				% Appendixes with roman numbers
+				% ################
+
+				% ################
+				% Bibliography
+				% ################
 				\printbibliography[
 					heading=bibintoc,
 					title={Bibliographie}
