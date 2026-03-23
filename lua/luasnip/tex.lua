@@ -180,7 +180,7 @@ return {
 
 	-- Boilerplate snippets
 	s(
-		{ trig = "figure", snippetType = "autosnippet", dscr = "A basic figure environment" },
+		{ trig = "figure", snippetType = "snippet", dscr = "A basic figure environment" },
 		fmta(
 			[[
         \begin{figure}
@@ -195,6 +195,67 @@ return {
 
         ]],
 			{ i(1, "filename"), i(2, "captionBold"), i(3, "captionText"), i(4, "figureLabel") }
+		)
+	),
+
+	s(
+		{ trig = "subfigure", snippetType = "snippet", dscr = "A basic sub-figure environment" },
+		fmta(
+			[[
+			\begin{figure}[htbp]
+				\centering
+				\begin{subfigure}{0.48\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{<>}
+					\caption{<>}
+					\label{<>}
+				\end{subfigure}
+				\hfill
+				\begin{subfigure}{0.48\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{<>}
+					\caption{<>}
+					\label{<>}
+				\end{subfigure}
+
+				\vspace{1em}
+
+				\centering
+				\begin{subfigure}{0.48\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{<>}
+					\caption{<>}
+					\label{<>}
+				\end{subfigure}
+				\hfill
+				\begin{subfigure}{0.48\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{<>}
+					\caption{<>}
+					\label{<>}
+				\end{subfigure}
+
+				\caption{<>}
+				\label{<>}
+			\end{figure}
+
+        ]],
+			{
+				i(1, "filename"),
+				i(2, "caption"),
+				i(3, "label"),
+				i(4, "filename"),
+				i(5, "caption"),
+				i(6, "label"),
+				i(7, "filename"),
+				i(8, "caption"),
+				i(9, "label"),
+				i(10, "filename"),
+				i(11, "caption"),
+				i(12, "label"),
+				i(13, "caption"),
+				i(14, "label"),
+			}
 		)
 	),
 
