@@ -18,3 +18,10 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+
+vim.keymap.set(
+	"n",
+	"<leader>gh",
+	"<cmd>LspClangdSwitchSourceHeader<cr>",
+	{ desc = "Switch from Header and Source files" }
+)
