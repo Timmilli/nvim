@@ -95,6 +95,8 @@ return {
 		end
 	end,
 	on_attach = function(client, bufnr)
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
 		vim.api.nvim_buf_create_user_command(bufnr, "LspClangdSwitchSourceHeader", function()
 			switch_source_header(bufnr, client)
 		end, { desc = "Switch between source/header" })
