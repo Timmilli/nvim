@@ -42,6 +42,7 @@ require("lazy").setup({
 	require("plugins.catppuccin"),
 	require("plugins.comments"),
 	require("plugins.conform"),
+	require("plugins.copilot"),
 	require("plugins.gitsigns"),
 	require("plugins.indent_line"),
 	require("plugins.lint"),

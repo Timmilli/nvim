@@ -25,3 +25,10 @@ vim.keymap.set(
 	"<cmd>LspClangdSwitchSourceHeader<cr>",
 	{ desc = "Switch from Header and Source files" }
 )
+
+-- To use <Alt+Enter> instead of <Tab> for Copilot hints
+vim.keymap.set("i", "<A-CR>", 'copilot#Accept("\\<CR>")', {
+	expr = true,
+	replace_keycodes = false,
+})
+vim.g.copilot_no_tab_map = true
