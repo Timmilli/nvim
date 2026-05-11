@@ -52,3 +52,11 @@ vim.opt.breakindent = true
 -- For spelling mistakes
 vim.opt.spelllang = { "en_us", "fr" }
 vim.opt.spell = true
+
+vim.opt.autoread = true
+
+-- Trigger autoread when the file changes on disk
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	command = "if mode() != 'c' | checktime | endif",
+	pattern = { "*" },
+})

@@ -43,6 +43,7 @@ require("lazy").setup({
 	require("plugins.comments"),
 	require("plugins.conform"),
 	require("plugins.copilot"),
+	require("plugins.copilot_chat"),
 	require("plugins.gitsigns"),
 	require("plugins.indent_line"),
 	require("plugins.lint"),
