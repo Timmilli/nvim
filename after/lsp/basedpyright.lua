@@ -18,10 +18,18 @@ return {
 			-- https://docs.basedpyright.com/latest/configuration/config-files/#overriding-language-server-settings
 			-- https://docs.basedpyright.com/latest/configuration/language-server-settings/#discouraged-settings
 			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "openFilesOnly",
 				typeCheckingMode = "standard",
-				-- see https://docs.basedpyright.com/latest/usage/import-resolution/#configuring-your-python-environment
-				-- see https://github.com/microsoft/pyright/blob/main/docs/import-resolution.md#resolution-order
-				extraPaths = { "./python" },
+
+				extraPaths = {
+					"./python",
+					"./typings",
+				},
+
+				stubPath = "./typings",
+
+				useLibraryCodeForTypes = true,
 			},
 
 			inlayHints = {
