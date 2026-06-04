@@ -197,6 +197,17 @@ return {
 			{ i(1, "filename"), i(2, "captionBold"), i(3, "captionText"), i(4, "figureLabel") }
 		)
 	),
+	s(
+		{ trig = "frame", snippetType = "snippet", dscr = "A basic frame environment" },
+		fmta(
+			[[
+        \begin{frame}{<>}
+		    <>
+        \end{frame}
+        ]],
+			{ i(1, "frameTitle"), i(2, "frameContent") }
+		)
+	),
 
 	s(
 		{ trig = "subfigure", snippetType = "snippet", dscr = "A basic sub-figure environment" },
