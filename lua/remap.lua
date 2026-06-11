@@ -25,3 +25,10 @@ vim.keymap.set(
 	"<cmd>LspClangdSwitchSourceHeader<cr>",
 	{ desc = "Switch from Header and Source files" }
 )
+vim.keymap.set("n", "gvd", function()
+	-- 1. Open a vertical split and move focus to it
+	vim.cmd("rightb vsplit")
+
+	-- 2. Trigger the Telescope LSP definitions picker in the new split
+	require("telescope.builtin").lsp_definitions()
+end, { desc = "[G]oto [D]efinition in Right Split" })
