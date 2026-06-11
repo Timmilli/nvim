@@ -31,6 +31,14 @@ return { -- Autoformat
 			tex = { "latexindent" },
 			c = { "clang-format" },
 			cpp = { "clang-format" },
+			json = { "biome", "prettier", stop_after_first = true },
+			markdown = { "prettier" },
+			javascript = { "biome", "prettier", stop_after_first = true },
+			typescript = { "biome", "prettier", stop_after_first = true },
+			javascriptreact = { "biome", "prettier", stop_after_first = true },
+			typescriptreact = { "biome", "prettier", stop_after_first = true },
+			css = { "prettier" },
+			html = { "prettier" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--

@@ -87,6 +87,9 @@ return {
 			-- Python LSP
 			"basedpyright",
 			"ruff",
+			-- HTML
+			"emmet-ls",
+			"emmet-language-server",
 		}
 
 		require("mason-tool-installer").setup({
