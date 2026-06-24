@@ -39,6 +39,7 @@ return { -- Autoformat
 			typescriptreact = { "biome", "prettier", stop_after_first = true },
 			css = { "prettier" },
 			html = { "prettier" },
+			xml = { "prettier" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
