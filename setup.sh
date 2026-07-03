@@ -13,7 +13,8 @@ apt install -y \
 	wl-copy
 
 # Neovim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+# https://github.com/neovim/neovim/releases#release-v0.12.3
+curl -LO https://github.com/neovim/neovim/releases#release-v0.12.3/download/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim-linux-x86_64
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 export PATH='$PATH:/opt/nvim-linux-x86_64/bin'
