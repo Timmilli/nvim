@@ -1,4 +1,5 @@
-sudo apt install -y \
+apt update
+apt install -y \
 	makefile \
 	curl \
 	git \
@@ -10,6 +11,12 @@ sudo apt install -y \
 	unzip \
 	fd-find \
 	wl-copy
+
+# Neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim-linux-x86_64
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+export PATH='$PATH:/opt/nvim-linux-x86_64/bin'
 
 mkdir /tmp/build/
 cd /tmp/build/
@@ -30,18 +37,18 @@ wget https://www.lua.org/ftp/lua-5.1.5.tar.gz
 tar xvf lua-5.1.5.tar.gz
 cd lua-5.1.5/
 make linux test
-sudo make install
+make install
 cd ../
 
 # Luarocks
 wget https://luarocks.org/releases/luarocks-3.13.0.tar.gz
 tar zxpf luarocks-3.13.0.tar.gz
 cd luarocks-3.13.0
-./configure && make && sudo make install
-sudo luarocks install luasocket
+./configure && make && make install
+luarocks install luasocket
 
 # jsregexp for Luasnip
-sudo luarocks install jsregexp
+luarocks install jsregexp
 
 # Rust and cargo
 curl https://sh.rustup.rs -sSf | sh
@@ -51,12 +58,12 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 nvm install 24
 
 # tree-sitter-cli
-sudo apt install tree-sitter-cli
+apt install tree-sitter-cli
 
 # LaTeX and Latexmk
 curl -L -o install-tl-unx.tar.gz
 zcat < install-tl-unx.tar.gz | tar xf -
 cd install-tl-2*
-sudo perl ./install-tl --no-interaction
-echo 'export /usr/local/texlive/2026/bin/x86_64-linux:$PATH' >> ~/.bashrc
-sudo apt install -y latexmk
+perl ./install-tl --no-interaction
+echo 'export PATH=/usr/local/texlive/2026/bin/x86_64-linux:$PATH' >> ~/.bashrc
+apt install -y latexmk
