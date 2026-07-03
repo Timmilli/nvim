@@ -1,25 +1,33 @@
-apt update && apt upgrade
-apt install -y makefile \
+apt-get update && apt-get upgrade
+apt-get install -y makefile \
 	curl \
 	git \
 	ripgrep \
-	gh \
-	git \
 	build-essential \
 	libreadline-dev \
 	unzip \
-	fd-find \
-	wl-copy 
+	fd \
+	wl-clipboard
 
 # Neovim
-# https://github.com/neovim/neovim/releases#release-v0.12.3
-curl -LO https://github.com/neovim/neovim/releases#release-v0.12.3/download/nvim-linux-x86_64.tar.gz
+curl -LO https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-linux-x86_64.tar.gz
 rm -rf /opt/nvim-linux-x86_64
 tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-export PATH='$PATH:/opt/nvim-linux-x86_64/bin'
+echo 'export PATH=$PATH:/opt/nvim-linux-x86_64/bin' >> ~/.bashrc
 
 mkdir /tmp/build/
 cd /tmp/build/
+
+# gh
+(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
 
 # Lynx for Copilot
 wget https://invisible-island.net/archives/lynx/tarballs/lynx2.9.3.tar.gz
@@ -58,12 +66,12 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 nvm install 24
 
 # tree-sitter-cli
-apt install tree-sitter-cli
+apt-get install tree-sitter-cli
 
 # LaTeX and Latexmk
-curl -L -o install-tl-unx.tar.gz
+curl -L -o install-tl-unx.tar.gz https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 zcat < install-tl-unx.tar.gz | tar xf -
 cd install-tl-2*
 perl ./install-tl --no-interaction
 echo 'export PATH=/usr/local/texlive/2026/bin/x86_64-linux:$PATH' >> ~/.bashrc
-apt install -y latexmk
+apt-get install -y latexmk
