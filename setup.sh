@@ -1,6 +1,5 @@
-apt update
-apt install -y \
-	makefile \
+apt update && apt upgrade
+apt install -y makefile \
 	curl \
 	git \
 	ripgrep \
@@ -10,7 +9,7 @@ apt install -y \
 	libreadline-dev \
 	unzip \
 	fd-find \
-	wl-copy
+	wl-copy 
 
 # Neovim
 # https://github.com/neovim/neovim/releases#release-v0.12.3
