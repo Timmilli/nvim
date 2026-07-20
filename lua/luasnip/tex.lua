@@ -183,7 +183,7 @@ return {
 		{ trig = "figure", snippetType = "snippet", dscr = "A basic figure environment" },
 		fmta(
 			[[
-        \begin{figure}
+        \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.9\linewidth]{<>}
         \caption{
